@@ -9,7 +9,26 @@ spring:
       circuitbreaker:
         enabled: true
 
+  kafka:
+    bootstrap-servers: kafka:9094
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-server:8761/eureka
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0  # 모든 요청 추적
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+
+  endpoints:
+    web:
+      exposure:
+        include: '*'
